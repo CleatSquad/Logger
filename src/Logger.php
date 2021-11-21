@@ -33,6 +33,6 @@ class Logger
         }
         $logger = new LoggerHandler('logger');
         $logger->pushHandler(new StreamHandler(BP . sprintf('/var/log/%s', $filename), $type));
-        $logger->log($text, $type);
+        $logger->log($type, $text);
     }
 }
