@@ -18,6 +18,20 @@ use Monolog\Handler\StreamHandler;
 class Logger
 {
     /**
+     * @param string $filename
+     * @param int $type
+     * @return LoggerHandler
+     * @throws \Exception                If a missing directory is not buildable
+     * @throws \InvalidArgumentException If stream is not a resource or string
+     */
+    private static function prepareLog($filename, $type = LoggerHandler::DEBUG)
+    {
+        $logger = new LoggerHandler('logger');
+        $logger->pushHandler(new StreamHandler(BP . sprintf('/var/log/%s', $filename), $type));
+        return $logger;
+    }
+
+    /**
      * Send log to the defined file in var/log
      *
      * @param mixed $text
@@ -28,11 +42,42 @@ class Logger
      */
     public static function log($text, $filename = 'logger.log', $type = LoggerHandler::DEBUG)
     {
-        if (is_array($text)) {
-            $text = print_r($text, true);
+        if ($text) {
+            if (is_object($text) && method_exists($text, '__toString')) {
+                $text = $text->__toString();
+            }
+            if (is_array($text) || is_object($text)) {
+                $text = var_export($text, true);
+            }
+
+            $logger = self::prepareLog($filename, $type);
+            $logger->log($type, $text);
         }
-        $logger = new LoggerHandler('logger');
-        $logger->pushHandler(new StreamHandler(BP . sprintf('/var/log/%s', $filename), $type));
-        $logger->log($type, $text);
+    }
+
+    /**
+     * Send log to the defined file in var/log defined type
+     *
+     * @param string $name
+     * @param array $arguments
+     * @throws \Exception                If a missing directory is not buildable
+     * @throws \InvalidArgumentException If stream is not a resource or string
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if (isset($arguments[0])) {
+            if (is_object($arguments[0]) && method_exists($arguments[0], '__toString')) {
+                $arguments[0] = $arguments[0]->__toString();
+            }
+            if (is_array($arguments[0]) || is_object($arguments[0])) {
+                $arguments[0] = print_r($arguments[0], true);
+            }
+
+            if (!isset($arguments[1])) {
+                $arguments[1] = 'logger.log';
+            }
+            $logger = self::prepareLog($arguments[1]);
+            $logger->$name($arguments[0]);
+        }
     }
 }

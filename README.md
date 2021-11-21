@@ -21,16 +21,37 @@ Add dependency
 composer require cleatsquad/logger
 ```
 
-## Using
+## Examples
 
 You can use it in your php class like this 
 
 ```php
-\CleatSquad\Logger::log('test', 'test.log');
-\CleatSquad\Logger::log('test', 'test.log', \Monolog\Logger::WARNING);
-\CleatSquad\Logger::log(['test' => 'is an array'], 'test.log');
+\CleatSquad\Logger::log('Hello!!', 'test.log');
+\CleatSquad\Logger::log('Hello!!', 'test.log', \Monolog\Logger::WARNING);
+\CleatSquad\Logger::log([22 => 'is an array'], 'test.log');
+\CleatSquad\Logger::info(['is an array'], 'test.log');
+
+try {
+    throw new \Exception('Error message');
+} catch (\Exception $exception) {
+    \CleatSquad\Logger::critical($exception);
+}
+```
+## Results
+
+
+**test.log**
+
+```
+[2021-11-21 14:17:44] logger.DEBUG: Hello!! [] []
+[2021-11-21 14:17:44] logger.WARNING: Hello!! [] []
+[2021-11-21 14:17:44] logger.DEBUG: Array (     [22] => is an array )  [] []
+[2021-11-21 14:17:44] logger.INFO: Array (     [0] => is an array )  [] []
 ```
 
+```
+[2021-11-21 14:22:40] logger.CRITICAL: Exception: Error message in /var/www/html/pub/index.php:37 Stack trace: #0 {main} [] []
+```
 
 ## Log Levels
 
