@@ -1,0 +1,23 @@
+{
+    "name": "cleatsquad/logger",
+    "description": "Custom logger based in laminas",
+    "require": {
+        "monolog/monolog": "^2.3"
+    },
+    "version": "1.0.0",
+    "license": [
+        "MIT"
+    ],
+    "authors": [
+        {
+            "name": "Mohamed El Mrabet",
+            "homepage": "https://www.cleatsquad.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/Logger.php"
+        ]
+    }
+}
