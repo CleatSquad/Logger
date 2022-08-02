@@ -2,8 +2,7 @@
     "name": "cleatsquad/logger",
     "description": "Custom logger based in laminas",
     "require": {
-        "monolog/monolog": ">=1.17.0",
-        "php": ">=7.4.0"
+        "monolog/monolog": ">=1.17.0"
     },
     "version": "1.0.0",
     "license": [
