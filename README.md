@@ -18,7 +18,7 @@ This package is recommended for magento 2.
 
 Add dependency
 ```
-composer require cleatsquad/logger
+composer require cleatsquad/logger ^1.1
 ```
 
 ## Examples
@@ -37,6 +37,22 @@ try {
     \CleatSquad\Logger::critical($exception);
 }
 ```
+
+From 1.1.2 you can use the magic log method below examples
+
+```php
+log('Hello!!', 'test.log');
+log('Hello!!', 'test.log', \Monolog\Logger::WARNING);
+log([22 => 'is an array'], 'test.log');
+log(['is an array'], 'test.log', \Monolog\Logger::INFO);
+
+try {
+    throw new \Exception('Error message');
+} catch (\Exception $exception) {
+    log($exception);
+}
+```
+
 ## Results
 
 

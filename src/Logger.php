@@ -2,7 +2,7 @@
 /**
  * @category    CleatSquad
  * @package     CleatSquad_Logger
- * @copyright   Copyright (c) 2021 CleatSquad, Inc. (https://www.cleatsquad.com)
+ * @copyright   Copyright (c) 2022 CleatSquad, Inc. (https://www.cleatsquad.com)
  */
 declare(strict_types=1);
 
@@ -24,7 +24,7 @@ class Logger
      * @throws \Exception                If a missing directory is not buildable
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
-    private static function prepareLog($filename, $type = LoggerHandler::DEBUG)
+    private static function prepareLog(string $filename, int $type = LoggerHandler::DEBUG)
     {
         $logger = new LoggerHandler('logger');
         $logger->pushHandler(new StreamHandler(BP . sprintf('/var/log/%s', $filename), $type));
@@ -40,7 +40,7 @@ class Logger
      * @throws \Exception                If a missing directory is not buildable
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
-    public static function log($text, $filename = 'logger.log', $type = LoggerHandler::DEBUG)
+    public static function log($text, string $filename = 'logger.log', int $type = LoggerHandler::DEBUG)
     {
         if ($text) {
             if (is_object($text) && method_exists($text, '__toString')) {
@@ -63,7 +63,7 @@ class Logger
      * @throws \Exception                If a missing directory is not buildable
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic(string $name, array $arguments)
     {
         if (isset($arguments[0])) {
             if (is_object($arguments[0]) && method_exists($arguments[0], '__toString')) {
