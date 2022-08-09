@@ -15,7 +15,7 @@ if (!function_exists('log')) {
      * @throws \Exception                If a missing directory is not buildable
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
-    function log($text, $filename = 'logger.log', $type = LoggerHandler::DEBUG): void
+    function log($text, string $filename = 'logger.log', int $type = LoggerHandler::DEBUG): void
     {
         \CleatSquad\Logger::log($text, $filename, $type);
     }
